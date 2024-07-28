@@ -1,6 +1,8 @@
 package com.example.demo.controller;
 
+import com.example.demo.requsetDTO.LoginDTO;
 import com.example.demo.requsetDTO.RegisterDTO;
+import com.example.demo.responseDTO.LoginResponseDTO;
 import com.example.demo.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +22,11 @@ public class UserController {
         userService.register(registerDTO);
 
         return "good";
+    }
+
+    @PostMapping("/login")
+    private LoginResponseDTO login(@RequestBody LoginDTO loginDTO) {
+        return userService.login(loginDTO);
     }
 
 
