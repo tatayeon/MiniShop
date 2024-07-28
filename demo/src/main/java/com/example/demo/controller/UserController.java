@@ -4,6 +4,7 @@ import com.example.demo.requsetDTO.LoginDTO;
 import com.example.demo.requsetDTO.RegisterDTO;
 import com.example.demo.responseDTO.LoginResponseDTO;
 import com.example.demo.service.UserService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,13 +21,15 @@ public class UserController {
     @PostMapping("/register")
     private String register(@RequestBody RegisterDTO registerDTO) {
         userService.register(registerDTO);
-
         return "good";
     }
 
     @PostMapping("/login")
-    private LoginResponseDTO login(@RequestBody LoginDTO loginDTO) {
-        return userService.login(loginDTO);
+    private String login(@RequestBody LoginDTO loginDTO, HttpSession session) {
+        LoginResponseDTO responseDTO =  userService.login(loginDTO);
+        session.setAttribute("user", responseDTO); //일단 로그인 정보를 세션이 넣는 방식으로 진행
+        return "good";
+
     }
 
 

@@ -5,6 +5,7 @@ import com.example.demo.repository.UserRepository;
 import com.example.demo.requsetDTO.LoginDTO;
 import com.example.demo.requsetDTO.RegisterDTO;
 import com.example.demo.responseDTO.LoginResponseDTO;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +20,7 @@ import java.util.Objects;
 public class UserService {
 
     private final UserRepository userRepository;
+    private HttpSession session;
 
     @Transactional
     public void register(RegisterDTO registerDTO) {
@@ -28,17 +30,16 @@ public class UserService {
     }
 
     @Transactional
-    public LoginResponseDTO login(LoginDTO loginDTO){
+    public LoginResponseDTO login(LoginDTO loginDTO) {
         User user = userRepository.findByNickNameForLogin(loginDTO.getNickName());
-        if(user == null){
-            throw new IllegalStateException("nickName이 틀립니다.");
-        } else if (!Objects.equals(user.getPassword(), loginDTO.getPassword())) {
-            throw new IllegalStateException("password를 확인해주세요");
+
+        if (user != null && user.getPassword().equals(loginDTO.getPassword())) {
+            // 성공 응답 생성
+            return new LoginResponseDTO(user.getId().toString(), user.getNickName(), true);
+        } else {
+            // 실패 응답 생성
+            throw new IllegalStateException("로그인 실패");
         }
-
-        LoginResponseDTO loginResponseDTO = new LoginResponseDTO(loginDTO.getNickName(), loginDTO.getPassword());
-        return loginResponseDTO;
-
     }
 
 
