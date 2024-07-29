@@ -1,6 +1,7 @@
 package com.example.demo.domain;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -31,11 +32,20 @@ public class Item {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public Item(String name, int price,int stockQuantity, String description) {
+    @Builder
+    public Item(String name, int price,int stockQuantity, String description, User user) {
         this.name = name;
         this.price = price;
         this.stockQuantity = stockQuantity;
         this.description = description;
+        this.user = user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+        if (!user.getItems().contains(this)) {
+            user.addItem(this);
+        }
     }
 
 }

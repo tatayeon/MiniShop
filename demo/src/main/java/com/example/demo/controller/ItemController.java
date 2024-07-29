@@ -2,6 +2,8 @@ package com.example.demo.controller;
 
 import com.example.demo.domain.Item;
 import com.example.demo.requsetDTO.ItemInsertRequestDTO;
+import com.example.demo.requsetDTO.LoginDTO;
+import com.example.demo.responseDTO.LoginResponseDTO;
 import com.example.demo.service.ItemService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -22,7 +24,8 @@ public class ItemController {
 
     @PostMapping("/insert")
     private String insertItem(@RequestBody ItemInsertRequestDTO requestDTO, HttpSession session) {
-        itemService.insertItem(requestDTO);
+        LoginResponseDTO loginResponseDTO = (LoginResponseDTO)session.getAttribute("user");
+        itemService.insertItem(requestDTO, loginResponseDTO);
         return "good";
     }
 

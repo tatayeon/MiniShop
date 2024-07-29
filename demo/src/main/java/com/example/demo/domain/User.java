@@ -34,4 +34,11 @@ public class User {
         this.email = email;
     }
 
+    public void addItem(Item item) {
+        this.items.add(item);
+    }
+
+
+
+
 }

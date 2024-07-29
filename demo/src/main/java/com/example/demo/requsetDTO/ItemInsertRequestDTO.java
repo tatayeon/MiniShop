@@ -16,6 +16,6 @@ public class ItemInsertRequestDTO {
 
     private String description;
 
-    private User user;
+    private String writer;
 
 }

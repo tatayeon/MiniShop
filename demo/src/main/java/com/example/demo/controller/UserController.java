@@ -26,8 +26,8 @@ public class UserController {
 
     @PostMapping("/login")
     private String login(@RequestBody LoginDTO loginDTO, HttpSession session) {
-        LoginResponseDTO responseDTO =  userService.login(loginDTO);
-        session.setAttribute("user", responseDTO); //일단 로그인 정보를 세션이 넣는 방식으로 진행
+        LoginResponseDTO loginresponseDTO =  userService.login(loginDTO);
+        session.setAttribute("user", loginresponseDTO); //일단 로그인 정보를 세션이 넣는 방식으로 진행
         return "good";
 
     }
