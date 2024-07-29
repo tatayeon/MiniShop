@@ -35,7 +35,7 @@ public class UserService {
 
         if (user != null && user.getPassword().equals(loginDTO.getPassword())) {
             // 성공 응답 생성
-            return new LoginResponseDTO(user.getId().toString(), user.getNickName(), true);
+            return new LoginResponseDTO(user.getId(), user.getNickName(), true);
         } else {
             // 실패 응답 생성
             throw new IllegalStateException("로그인 실패");

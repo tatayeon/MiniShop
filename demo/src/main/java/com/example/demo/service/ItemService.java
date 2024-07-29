@@ -6,6 +6,7 @@ import com.example.demo.repository.ItemRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.requsetDTO.ItemInsertRequestDTO;
 import com.example.demo.requsetDTO.LoginDTO;
+import com.example.demo.responseDTO.ItemDetailDTO;
 import com.example.demo.responseDTO.LoginResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -35,6 +36,21 @@ public class ItemService {
         item.setUser(user.get(0));
         itemRepository.save(item);
         return "good";
+    }
+
+    @Transactional
+    public ItemDetailDTO showDetail(Long itemId, Long userId){
+        Item item = itemRepository.findById(itemId).orElse(null);
+
+        User user = userRepository.findById(userId).orElse(null);
+
+        return ItemDetailDTO.builder()
+                .title(item.getName())
+                .price(item.getPrice())
+                .stockQuantity(item.getStockQuantity())
+                .description(item.getDescription())
+                .witer(user.getNickName())
+                .build();
     }
 
 }
