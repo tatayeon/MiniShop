@@ -29,7 +29,6 @@ public class UserController {
         LoginResponseDTO loginresponseDTO =  userService.login(loginDTO);
         session.setAttribute("user", loginresponseDTO); //일단 로그인 정보를 세션이 넣는 방식으로 진행
         return "good";
-
     }
 
 
