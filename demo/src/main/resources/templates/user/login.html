@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/header :: header">
+<head th:replace="~{fragments/header :: header}">
     <meta name="author" content="" />
     <title>Shop Homepage - Start Bootstrap Template</title>
 </head>
 <body>
 
-<div th:replace="fragments/bodyheader :: bodyHeader" /></div>
+<div th:replace="~{fragments/bodyheader :: bodyHeader}"></div>
 <section class="h-100">
     <div class="container h-100">
         <div class="row justify-content-md-center h-100">
@@ -17,7 +17,7 @@
                 <div class="card fat">
                     <div class="card-body">
                         <h4 class="card-title">Login</h4>
-                        <form method="POST" class="my-login-validation" novalidate="">
+                        <form method="POST" class="my-login-validation" novalidate="" action="/user/login">
                             <div class="form-group">
                                 <label for="email">E-Mail Address</label>
                                 <input id="email" type="email" class="form-control" name="email" value="" required autofocus>
@@ -63,7 +63,7 @@
         </div>
     </div>
 </section>
-<div th:replace="fragments/footer :: footer" />
+<div th:replace="~{fragments/footer :: footer}"></div>
 
 </body>
 </html>

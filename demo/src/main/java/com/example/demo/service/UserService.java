@@ -7,6 +7,7 @@ import com.example.demo.requsetDTO.RegisterDTO;
 import com.example.demo.responseDTO.LoginResponseDTO;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +15,8 @@ import javax.security.auth.login.LoginException;
 import java.util.List;
 import java.util.Objects;
 
+import static org.hibernate.query.sqm.tree.SqmNode.log;
+@Slf4j
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -31,11 +34,14 @@ public class UserService {
 
     @Transactional
     public LoginResponseDTO login(LoginDTO loginDTO) {
-        User user = userRepository.findByNickNameForLogin(loginDTO.getNickName());
+        User user = userRepository.findByEmail(loginDTO.getEmail());
+
+        log.info(user.getEmail());
+
 
         if (user != null && user.getPassword().equals(loginDTO.getPassword())) {
             // 성공 응답 생성
-            return new LoginResponseDTO(user.getId(), user.getNickName(), true);
+            return new LoginResponseDTO(user.getId(), user.getEmail(), true);
         } else {
             // 실패 응답 생성
             throw new IllegalStateException("로그인 실패");

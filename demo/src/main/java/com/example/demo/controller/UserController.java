@@ -7,8 +7,10 @@ import com.example.demo.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-@RestController
+@Controller
 @RequestMapping("/user")
 @RequiredArgsConstructor
 public class UserController {
@@ -22,15 +24,18 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody LoginDTO loginDTO, HttpSession session) {
+    public String login(@ModelAttribute LoginDTO loginDTO, HttpSession session) {
         LoginResponseDTO loginresponseDTO =  userService.login(loginDTO);
         session.setAttribute("user", loginresponseDTO); //일단 로그인 정보를 세션이 넣는 방식으로 진행
-        return "good";
+        return "redirect:/";
     }
+
     @GetMapping("/login")
     public String login() {
-        return "User/login.html";
+        return "user/login.html";
     }
+
+
 
 
 }
