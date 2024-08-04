@@ -20,14 +20,18 @@ public class UserController {
     @PostMapping("/register")
     public String register(@RequestBody RegisterDTO registerDTO) {
         userService.register(registerDTO);
-        return "good";
+        return "redirect:/";
     }
 
     @PostMapping("/login")
-    public String login(@ModelAttribute LoginDTO loginDTO, HttpSession session) {
+    public String login(@RequestBody LoginDTO loginDTO, HttpSession session) {
+        System.out.println("Email: " + loginDTO.getEmail()); // 디버깅용 출력
+        System.out.println("Password: " + loginDTO.getPassword());
+
         LoginResponseDTO loginresponseDTO =  userService.login(loginDTO);
         session.setAttribute("user", loginresponseDTO); //일단 로그인 정보를 세션이 넣는 방식으로 진행
-        return "redirect:/";
+        return "redirect:/test.html";
+
     }
 
     @GetMapping("/login")

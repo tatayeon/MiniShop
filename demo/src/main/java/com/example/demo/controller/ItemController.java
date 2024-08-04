@@ -27,12 +27,11 @@ public class ItemController {
         return "good";
     }
 
-    @GetMapping("/show/detail")
-    public ItemDetailDTO showDetail(@RequestParam Long itemId, HttpSession session){
+    @GetMapping("/show/detail/{itemId}")
+    public ItemDetailDTO showDetail(@PathVariable("itemId") Long itemId, HttpSession session){
 
         LoginResponseDTO loginResponseDTO = (LoginResponseDTO)session.getAttribute("user");
         return itemService.showDetail(itemId, loginResponseDTO.getId());
-
     }
 
 }

@@ -32,19 +32,16 @@ public class UserService {
         userRepository.save(user);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public LoginResponseDTO login(LoginDTO loginDTO) {
         User user = userRepository.findByEmail(loginDTO.getEmail());
-
-        log.info(user.getEmail());
-
 
         if (user != null && user.getPassword().equals(loginDTO.getPassword())) {
             // 성공 응답 생성
             return new LoginResponseDTO(user.getId(), user.getEmail(), true);
         } else {
             // 실패 응답 생성
-            throw new IllegalStateException("로그인 실패");
+            throw new IllegalStateException("로그인 실패" + loginDTO.getEmail());
         }
     }
 

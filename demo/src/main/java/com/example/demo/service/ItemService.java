@@ -52,5 +52,9 @@ public class ItemService {
                 .witer(user.getNickName())
                 .build();
     }
+    @Transactional
+    public List<Item> findItemList(){
+        return itemRepository.findAll();
+    }
 
 }
