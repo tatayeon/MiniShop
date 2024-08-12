@@ -10,6 +10,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/item")
@@ -21,9 +24,10 @@ public class ItemController {
     private final HttpSession session;
 
     @PostMapping("/insert")
-    private String insertItem(@RequestBody ItemInsertRequestDTO requestDTO, HttpSession session) {
+    private String insertItem(@RequestBody ItemInsertRequestDTO requestDTO, HttpSession session,
+                              @RequestPart(value = "files", required = false) List<MultipartFile> files) {
         LoginResponseDTO loginResponseDTO = (LoginResponseDTO)session.getAttribute("user");
-        itemService.insertItem(requestDTO, loginResponseDTO);
+        itemService.insertItem(requestDTO, loginResponseDTO, files);
         return "good";
     }
 
